@@ -12,7 +12,7 @@ class SecuritySetup extends StatefulWidget {
 class _SecuritySetupState extends State<SecuritySetup> {
   final TextEditingController textEditingController = TextEditingController();
   String hint_Text = 'Enter your account number';
-
+  int _pressedButton = 0;
   final border = OutlineInputBorder(
     borderSide: BorderSide(
       color: Colors.redAccent.shade400,
@@ -58,19 +58,34 @@ class _SecuritySetupState extends State<SecuritySetup> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 0;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent.shade400,
-                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          backgroundColor: _pressedButton == 0
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 0 ? Colors.white : Colors.black,
                         ),
                         child: const Text('EN'),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 1;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
                           elevation: 0,
-                          foregroundColor: Colors.black,
+                          backgroundColor: _pressedButton == 1
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 1 ? Colors.white : Colors.black,
                         ),
                         child: const Text('বাংলা'),
                       ),

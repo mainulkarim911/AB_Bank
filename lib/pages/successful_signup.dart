@@ -10,7 +10,7 @@ class SuccessfulSignUp extends StatefulWidget {
 
 class _SuccessfulSignUpState extends State<SuccessfulSignUp> {
   final TextEditingController textEditingController = TextEditingController();
-
+  int _pressedButton = 0;
   final border = OutlineInputBorder(
     borderSide: const BorderSide(),
     borderRadius: BorderRadius.circular(8),
@@ -33,19 +33,34 @@ class _SuccessfulSignUpState extends State<SuccessfulSignUp> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 0;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent.shade400,
-                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          backgroundColor: _pressedButton == 0
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 0 ? Colors.white : Colors.black,
                         ),
                         child: const Text('EN'),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 1;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
                           elevation: 0,
-                          foregroundColor: Colors.black,
+                          backgroundColor: _pressedButton == 1
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 1 ? Colors.white : Colors.black,
                         ),
                         child: const Text('বাংলা'),
                       ),

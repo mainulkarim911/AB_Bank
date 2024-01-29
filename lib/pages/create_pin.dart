@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_3/pages/confirm_pin.dart';
+import 'package:practice_3/pages/create_user_pass.dart';
 import 'package:practice_3/pages/security_setup.dart';
 
 class CreatePin extends StatefulWidget {
@@ -11,7 +12,7 @@ class CreatePin extends StatefulWidget {
 
 class _CreatePinState extends State<CreatePin> {
   final TextEditingController textEditingController = TextEditingController();
-
+  int _pressedButton = 0;
   final border = OutlineInputBorder(
     borderSide: const BorderSide(),
     borderRadius: BorderRadius.circular(8),
@@ -55,19 +56,34 @@ class _CreatePinState extends State<CreatePin> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 0;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent.shade400,
-                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          backgroundColor: _pressedButton == 0
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 0 ? Colors.white : Colors.black,
                         ),
                         child: const Text('EN'),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 1;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
                           elevation: 0,
-                          foregroundColor: Colors.black,
+                          backgroundColor: _pressedButton == 1
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 1 ? Colors.white : Colors.black,
                         ),
                         child: const Text('বাংলা'),
                       ),
@@ -166,6 +182,7 @@ class _CreatePinState extends State<CreatePin> {
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 20),
                             decoration: InputDecoration(
+                              hintText: '',
                               filled: true,
                               fillColor: Colors.white,
                               focusedBorder: border,
@@ -185,6 +202,7 @@ class _CreatePinState extends State<CreatePin> {
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 20),
                             decoration: InputDecoration(
+                              hintText: '',
                               filled: true,
                               fillColor: Colors.white,
                               focusedBorder: border,

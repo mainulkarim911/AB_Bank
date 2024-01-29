@@ -11,7 +11,7 @@ class Verification extends StatefulWidget {
 
 class _VerificationState extends State<Verification> {
   final TextEditingController textEditingController = TextEditingController();
-
+  int _pressedButton = 0;
   final border = OutlineInputBorder(
     borderSide: const BorderSide(),
     borderRadius: BorderRadius.circular(8),
@@ -55,19 +55,34 @@ class _VerificationState extends State<Verification> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 0;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent.shade400,
-                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          backgroundColor: _pressedButton == 0
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 0 ? Colors.white : Colors.black,
                         ),
                         child: const Text('EN'),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 1;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
                           elevation: 0,
-                          foregroundColor: Colors.black,
+                          backgroundColor: _pressedButton == 1
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 1 ? Colors.white : Colors.black,
                         ),
                         child: const Text('বাংলা'),
                       ),
@@ -166,6 +181,7 @@ class _VerificationState extends State<Verification> {
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 20),
                             decoration: InputDecoration(
+                              hintText: '',
                               filled: true,
                               fillColor: Colors.white,
                               focusedBorder: border,
@@ -185,6 +201,7 @@ class _VerificationState extends State<Verification> {
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 20),
                             decoration: InputDecoration(
+                              hintText: '',
                               filled: true,
                               fillColor: Colors.white,
                               focusedBorder: border,

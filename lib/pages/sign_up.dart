@@ -13,6 +13,7 @@ class _SignUpState extends State<SignUp> {
   String hint_Text = 'Enter your account number';
   String accourOrCard = 'Account Number';
   String selectedRadio = 'Account Information'; // Default value
+  int _pressedButton = 0;
   Function(bool?)? onChanged;
 
   final border = OutlineInputBorder(
@@ -53,19 +54,34 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 0;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent.shade400,
-                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          backgroundColor: _pressedButton == 0
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 0 ? Colors.white : Colors.black,
                         ),
                         child: const Text('EN'),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 1;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
                           elevation: 0,
-                          foregroundColor: Colors.black,
+                          backgroundColor: _pressedButton == 1
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 1 ? Colors.white : Colors.black,
                         ),
                         child: const Text('বাংলা'),
                       ),

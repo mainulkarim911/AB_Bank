@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:practice_3/pages/create_user_pass_2.dart';
+
+import 'package:practice_3/pages/security_setup.dart';
 import 'package:practice_3/pages/verification.dart';
 
 class CreateUser extends StatefulWidget {
@@ -12,7 +13,8 @@ class CreateUser extends StatefulWidget {
 class _CreateUserState extends State<CreateUser> {
   final TextEditingController textEditingController = TextEditingController();
   String hint_Text = 'Enter your password';
-
+  int _pressedButton = 0;
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final border = OutlineInputBorder(
     borderSide: const BorderSide(),
     borderRadius: BorderRadius.circular(8),
@@ -56,19 +58,34 @@ class _CreateUserState extends State<CreateUser> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 0;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent.shade400,
-                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          backgroundColor: _pressedButton == 0
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 0 ? Colors.white : Colors.black,
                         ),
                         child: const Text('EN'),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _pressedButton = 1;
+                          });
+                        },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
                           elevation: 0,
-                          foregroundColor: Colors.black,
+                          backgroundColor: _pressedButton == 1
+                              ? Colors.redAccent.shade400
+                              : Colors.transparent,
+                          foregroundColor:
+                              _pressedButton == 1 ? Colors.white : Colors.black,
                         ),
                         child: const Text('বাংলা'),
                       ),
@@ -144,35 +161,57 @@ class _CreateUserState extends State<CreateUser> {
                     const SizedBox(
                       height: 10,
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                          hintText: hint_Text,
-                          filled: true,
-                          fillColor: Colors.white,
-                          focusedBorder: border,
-                          enabledBorder: border,
-                          suffixIcon:
-                              const Icon(Icons.remove_red_eye_outlined)),
-                      keyboardType: TextInputType.number,
-                    ),
-                    const SizedBox(
-                      height: 120,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextButton(
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: InputDecoration(
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.redAccent.shade400),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.redAccent.shade400),
+                                ),
+                                errorStyle: TextStyle(
+                                  color: Colors.redAccent.shade400,
+                                ),
+                                hintText: hint_Text,
+                                //filled: true,
+                                //fillColor: Colors.white,
+                                focusedBorder: border,
+                                enabledBorder: border,
+                                suffixIcon:
+                                    const Icon(Icons.remove_red_eye_outlined)),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length <= 7) {
+                                return '! The password must be 8 or more characters long.';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 120,
+                          ),
+                          TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CreateUser2()));
+                              if (_formKey.currentState!.validate()) {
+                                // Form is valid, perform the desired action
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SecuritySetup()));
+                              }
                             },
                             style: TextButton.styleFrom(
                               backgroundColor: Colors.redAccent.shade400,
                               foregroundColor: Colors.white,
-                              minimumSize: const Size(5, 60),
+                              minimumSize: const Size(double.infinity, 60),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -182,8 +221,8 @@ class _CreateUserState extends State<CreateUser> {
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
